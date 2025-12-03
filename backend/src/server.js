@@ -1,6 +1,7 @@
 import express from 'express';
 import {ENV} from './lib/env.js';
 import path from 'path';
+import {connectDB} from './lib/db.js';
 
 
 const app = express();
@@ -21,6 +22,18 @@ if(ENV.NODE_ENV === "production"){
 
 }
 
-app.listen(ENV.PORT, () => {
-    console.log(`Server started on  http://localhost:${ENV.PORT}`);
-});
+const startServer = async () => {
+    try{
+        if(!ENV.PORT){
+            throw new Error("Database URL is not defined in environment variables");
+        }
+        await connectDB();
+        app.listen(ENV.PORT, () => {
+            console.log(`Server started on  http://localhost:${ENV.PORT}`);
+        })
+    } catch(err){
+        console.error(`Error starting server: ${err.message}`);
+    }
+}
+
+startServer();
