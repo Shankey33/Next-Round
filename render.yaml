@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: next-round-backend
+    env: node
+    rootDir: backend
+    plan: free
+    buildCommand: npm ci
+    startCommand: npm start
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: 18
+      # Add more env vars (e.g., MONGODB_URI, PORT)
+  - type: static
+    name: next-round-frontend
+    rootDir: frontend
+    buildCommand: npm ci && npm run build
+    publishPath: dist
+    autoDeploy: true
