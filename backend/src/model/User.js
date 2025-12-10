@@ -10,11 +10,11 @@ const userSchema = new mongoose.Schema({
         required:true,
         unique:true
     },
-    profile_image:{
+    profileImage:{
         type:String,
         default:""
     },
-    clearkId:{
+    clerkId:{
         type:String,
         required:true,
         unique: true

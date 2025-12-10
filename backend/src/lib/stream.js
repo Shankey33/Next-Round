@@ -9,7 +9,7 @@ if(!apiKey || !apiSecret) console.log("STREAM_API_KEY and/or STREAM_API_SECRET i
 
 export const chatClient = StreamChat.getInstance(apiKey, apiSecret);
 
-export const upsertSteamUser = async(userData) => {
+export const upsertStreamUser = async(userData) => {
     try{
         await chatClient.upsertUser(userData);
         console.log("Stream user upserted successfully!")
@@ -18,7 +18,7 @@ export const upsertSteamUser = async(userData) => {
     }
 }
 
-export const deleteSteamUser = async(userId) => {
+export const deleteStreamUser = async(userId) => {
     try{
         await chatClient.deleteUser(userId);
         console.log("Stream User deleted successfully!");
