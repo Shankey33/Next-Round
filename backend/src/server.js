@@ -5,6 +5,8 @@ import {ENV} from './lib/env.js';
 import {connectDB} from './lib/db.js';
 import {inngest, functions} from "./lib/inngest.js";
 import { serve } from "inngest/express";
+import {clerkMiddleware} from "@clerk/express";
+import chatRoutes from './routes/chatRoutes.js';
 
 const app = express();
 
@@ -16,7 +18,10 @@ app.use(express.json())
 //credentials: true means we are allowing browser to send cookies in the request
 app.use(cors({origin:ENV.CLIENT_URL, credentials:true}))
 
+app.use(clerkMiddleware()); // This adds auth field to req objects: req.auth()
+
 app.use("/api/inngest", serve({client: inngest, functions}))
+app.use("/api/chat", chatRoutes);
 
 
 app.get("/health", (req, res) => {
