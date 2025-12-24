@@ -1,25 +1,33 @@
-import './App.css'
-import { SignedOut, SignInButton, UserButton, SignedIn, SignOutButton } from '@clerk/clerk-react'
+import { useUser } from "@clerk/clerk-react";
+import { Navigate, Route, Routes } from "react-router-dom";
+import HomePage from "./pages/HomePage";
+
+import { Toaster } from "react-hot-toast";
+import DashboardPage from "./pages/DashboardPage";
+import ProblemPage from "./pages/ProblemPage";
+import ProblemsPage from "./pages/ProblemsPage";
+import SessionPage from "./pages/SessionPage";
 
 function App() {
+  const { isSignedIn, isLoaded } = useUser();
+
+  // this will get rid of the flickering effect
+  if (!isLoaded) return null;
 
   return (
     <>
-      <h3>Welcome to Next-Round Development Phase!</h3>
+      <Routes>
+        <Route path="/" element={!isSignedIn ? <HomePage /> : <Navigate to={"/dashboard"} />} />
+        <Route path="/dashboard" element={isSignedIn ? <DashboardPage /> : <Navigate to={"/"} />} />
 
-      <SignedOut>
-        <SignInButton mode='modal'>
-          <button>Log In</button>
-        </SignInButton>
-      </SignedOut>
+        <Route path="/problems" element={isSignedIn ? <ProblemsPage /> : <Navigate to={"/"} />} />
+        <Route path="/problem/:id" element={isSignedIn ? <ProblemPage /> : <Navigate to={"/"} />} />
+        <Route path="/session/:id" element={isSignedIn ? <SessionPage /> : <Navigate to={"/"} />} />
+      </Routes>
 
-      <SignedIn>
-        <SignOutButton mode='modal' />
-      </SignedIn>
-
-      <UserButton />
+      <Toaster toastOptions={{ duration: 3000 }} />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
