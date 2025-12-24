@@ -20,5 +20,8 @@
     "url": "https://github.com/Shankey33/Next-Round/issues"
   },
   "homepage": "https://github.com/Shankey33/Next-Round#readme",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "@stream-io/node-sdk": "^0.7.30"
+  }
 }

@@ -1,39 +1,37 @@
 import { Inngest } from "inngest";
-import { connectDB } from "./db.js";
 import User from "../model/User.js";
-import { upsertStreamUser, deleteStreamUser } from "./stream.js"
+import { deleteStreamUser, upsertStreamUser } from "./stream.js";
+import mongoose from "mongoose";
 
+export const inngest = new Inngest({ id: "talent-iq" });
 
-
-export const inngest = new Inngest({ id: "Next-Round" });
-
-// ---------------- Sync User ----------------
+const connectDB = async () => {
+	mongoose.connect(process.env.DB_URL)
+}
 
 const syncUser = inngest.createFunction(
   { id: "sync-user" },
   { event: "clerk/user.created" },
   async ({ event }) => {
     await connectDB();
-
     const { id, email_addresses, first_name, last_name, image_url } = event.data;
 
     const newUser = {
       clerkId: id,
-      email: email_addresses?.[0]?.email_address,
+      email: email_addresses[0]?.email_address,
       name: `${first_name || ""} ${last_name || ""}`,
       profileImage: image_url,
     };
 
     await User.create(newUser);
+
     await upsertStreamUser({
       id: newUser.clerkId.toString(),
       name: newUser.name,
-      image: newUser.image
-    })
+      image: newUser.profileImage,
+    });
   }
 );
-
-// ---------------- Delete User ----------------
 
 const deleteUserFromDB = inngest.createFunction(
   { id: "delete-user-from-db" },
@@ -42,7 +40,6 @@ const deleteUserFromDB = inngest.createFunction(
     await connectDB();
 
     const { id } = event.data;
-
     await User.deleteOne({ clerkId: id });
 
     await deleteStreamUser(id.toString());
