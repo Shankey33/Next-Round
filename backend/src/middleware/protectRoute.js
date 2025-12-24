@@ -6,7 +6,7 @@ export const protectRoute = [
     async (req, res, next) => {
         try {
             const clerkId = req.auth?.userId;
-            if (!crerkId) return res.status(401).json({ message: "Unauthorized - invalid token" });
+            if (!clerkId) return res.status(401).json({ message: "Unauthorized - invalid token" });
 
             // Find the user in the database by Clerk user id
             const user = await User.findOne({ clerkId });
