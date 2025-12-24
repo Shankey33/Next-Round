@@ -7,6 +7,7 @@ import mongoose from "mongoose";
 // Local Imports
 import { ENV } from "./lib/env.js";
 import { inngest, functions } from "./lib/inngest.js";
+import { connectDB } from "./lib/db.js";
 
 import chatRoutes from "./routes/chatRoutes.js";
 import sessionRoutes from "./routes/sessionRoutes.js";
@@ -28,14 +29,14 @@ app.get("/health", (req, res) => {
 
 
 //Connect to DB and start server
-mongoose.connect(ENV.DB_URL)
-    .then(() => {
-        console.log("Connected to Database");
-        app.listen(ENV.PORT, () => {
-            console.log(`Server is running on http://localhost:${ENV.PORT}`);
-        });
-    })
-    .catch((err) => {
-        console.error("Failed to connect to Database", err);
-        process.exit(1); //Error exit
+connectDB()
+.then(() => {
+    console.log("Connected to Database");
+    app.listen(ENV.PORT, () => {
+        console.log(`Server is running on http://localhost:${ENV.PORT}`);
     });
+})
+.catch((err) => {
+    console.error("Failed to connect to Database", err);
+    process.exit(1); //Error exit
+});
