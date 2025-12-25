@@ -12,7 +12,8 @@ function WelcomeSection({ onCreateSession }) {
             <div className="flex items-center gap-4 mb-6">
               <img src="/logo.png" alt="Next-Round Logo" className="w-24 h-24 object-contain" />
               <h1 className="text-3xl font-black bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-                Welcome back, {user?.firstName || "there"}!
+                Welcome, {user?.firstName || "there"}!
+                Next-Round is still in development phase, please bear with us.
               </h1>
             </div>
           </div>
