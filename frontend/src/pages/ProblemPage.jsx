@@ -16,22 +16,25 @@ function ProblemPage() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const [currentProblemId, setCurrentProblemId] = useState("two-sum");
+  const [currentProblemId, setCurrentProblemId] = useState(id);
   const [selectedLanguage, setSelectedLanguage] = useState("javascript");
   const [code, setCode] = useState(PROBLEMS[currentProblemId].starterCode.javascript);
   const [output, setOutput] = useState(null);
   const [isRunning, setIsRunning] = useState(false);
+  const [currentProblem, setCurrentProblem] = useState(PROBLEMS[currentProblemId]);
 
-  const currentProblem = PROBLEMS[currentProblemId];
-
+  
   // update problem when URL param changes
   useEffect(() => {
     if (id && PROBLEMS[id]) {
       setCurrentProblemId(id);
       setCode(PROBLEMS[id].starterCode[selectedLanguage]);
       setOutput(null);
+      setCurrentProblem(PROBLEMS[id]);
     }
-  }, [id, selectedLanguage]);
+  }, [id, selectedLanguage, []]);
+
+  console.log("Current Problem:", currentProblem);
 
   const handleLanguageChange = (e) => {
     const newLang = e.target.value;
@@ -39,8 +42,6 @@ function ProblemPage() {
     setCode(currentProblem.starterCode[newLang]);
     setOutput(null);
   };
-
-  const handleProblemChange = (newProblemId) => navigate(`/problem/${newProblemId}`);
 
   const triggerConfetti = () => {
     confetti({
@@ -106,6 +107,11 @@ function ProblemPage() {
     }
   };
 
+  // Take to the top when page loads
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="h-screen bg-base-100 flex flex-col">
       <Navbar />
@@ -117,18 +123,16 @@ function ProblemPage() {
             <ProblemDescription
               problem={currentProblem}
               currentProblemId={currentProblemId}
-              onProblemChange={handleProblemChange}
-              allProblems={Object.values(PROBLEMS)}
             />
           </Panel>
 
           <PanelResizeHandle className="w-2 bg-base-300 hover:bg-primary transition-colors cursor-col-resize" />
 
           {/* right panel- code editor & output */}
-          <Panel defaultSize={60} minSize={30}>
+          <Panel defaultSize={80} minSize={30}>
             <PanelGroup direction="vertical">
               {/* Top panel - Code editor */}
-              <Panel defaultSize={70} minSize={30}>
+              <Panel defaultSize={80} minSize={30}>
                 <CodeEditorPanel
                   selectedLanguage={selectedLanguage}
                   code={code}
@@ -137,9 +141,9 @@ function ProblemPage() {
                   onCodeChange={setCode}
                   onRunCode={handleRunCode}
                 />
-              </Panel>
+            </Panel>
 
-              <PanelResizeHandle className="h-2 bg-base-300 hover:bg-primary transition-colors cursor-row-resize" />
+          <PanelResizeHandle className="w-2 bg-base-300 hover:bg-primary transition-colors cursor-col-resize" />
 
               {/* Bottom panel - Output Panel*/}
 

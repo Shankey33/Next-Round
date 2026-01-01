@@ -1,5 +1,5 @@
 import { getDifficultyBadgeClass } from "../lib/utils";
-function ProblemDescription({ problem, currentProblemId, onProblemChange, allProblems }) {
+function ProblemDescription({ problem}) {
   return (
     <div className="h-full overflow-y-auto bg-base-200">
       {/* HEADER SECTION */}
@@ -11,21 +11,6 @@ function ProblemDescription({ problem, currentProblemId, onProblemChange, allPro
           </span>
         </div>
         <p className="text-base-content/60">{problem.category}</p>
-
-        {/* Problem selector */}
-        <div className="mt-4">
-          <select
-            className="select select-sm w-full"
-            value={currentProblemId}
-            onChange={(e) => onProblemChange(e.target.value)}
-          >
-            {allProblems.map((p) => (
-              <option key={p.id} value={p.id}>
-                {p.title} - {p.difficulty}
-              </option>
-            ))}
-          </select>
-        </div>
       </div>
 
       <div className="p-6 space-y-6">

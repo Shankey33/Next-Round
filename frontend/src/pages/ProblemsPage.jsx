@@ -1,12 +1,14 @@
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
-
+import { useState } from "react";
 import { PROBLEMS } from "../data/problems";
 import { ChevronRightIcon, Code2Icon } from "lucide-react";
 import { getDifficultyBadgeClass } from "../lib/utils";
 
 function ProblemsPage() {
   const problems = Object.values(PROBLEMS);
+
+  const [filter, setFilter] = useState(""); 
 
   const easyProblemsCount = problems.filter((p) => p.difficulty === "Easy").length;
   const mediumProblemsCount = problems.filter((p) => p.difficulty === "Medium").length;
@@ -18,16 +20,29 @@ function ProblemsPage() {
 
       <div className="max-w-6xl mx-auto px-4 py-12">
         {/* HEADER */}
-        <div className="mb-8">
+        <div className="mb-1">
           <h1 className="text-4xl font-bold mb-2">Practice Problems</h1>
-          <p className="text-base-content/70">
-            Sharpen your coding skills with these curated problems
-          </p>
+          <p className="text-base-content/70"> Sharpen your coding skills with these curated problems</p>
+        </div>
+
+        {/* Filter */}
+        <div>
+          <select className="select select-bordered mx-0 mt-5 md:mx-200 mb-6 " onChange={(e) => setFilter(e.target.value)}>
+            <option disabled selected>
+              Filter by Difficulty
+            </option>
+            <option>Easy</option>
+            <option>Medium</option>
+            <option>Hard</option>
+          </select>
         </div>
 
         {/* PROBLEMS LIST */}
         <div className="space-y-4">
-          {problems.map((problem) => (
+          {problems.filter((problem) => {
+            if (!filter) return true;
+            return problem.difficulty === filter;
+          }).map((problem) => (
             <Link
               key={problem.id}
               to={`/problem/${problem.id}`}
