@@ -177,7 +177,8 @@ class Solution {
     },
     examples: [
       { input: "nums = [-1,0,3,5,9,12], target = 9", output: "4" },
-      { input: "nums = [-1,0,3,5,9,12], target = 2", output: "-1" }
+      { input: "nums = [-1,0,3,5,9,12], target = 2", output: "-1" },
+      { input: "nums = [-1,0,3,5,9,12], target = -1", output: "0" }
     ],
     constraints: [
       "1 ≤ nums.length ≤ 10⁴",
@@ -192,14 +193,16 @@ class Solution {
 
 // Test cases
 console.log(search([-1,0,3,5,9,12], 9)); // Expected: 4
-console.log(search([-1,0,3,5,9,12], 2)); // Expected: -1`,
+console.log(search([-1,0,3,5,9,12], 2)); // Expected: -1
+console.log(search([-1,0,3,5,9,12], -1)); // Expected: 0 (first element)`,
       python: `def search(nums, target):
     # Write your solution here
     pass
 
 # Test cases
 print(search([-1,0,3,5,9,12], 9))  # Expected: 4
-print(search([-1,0,3,5,9,12], 2))  # Expected: -1`,
+print(search([-1,0,3,5,9,12], 2))  # Expected: -1
+print(search([-1,0,3,5,9,12], -1))  # Expected: 0 (first element)`,
       java: `class Solution {
     public static int search(int[] nums, int target) {
         // Write your solution here
@@ -209,13 +212,14 @@ print(search([-1,0,3,5,9,12], 2))  # Expected: -1`,
     public static void main(String[] args) {
         System.out.println(search(new int[]{-1,0,3,5,9,12}, 9)); // Expected: 4
         System.out.println(search(new int[]{-1,0,3,5,9,12}, 2)); // Expected: -1
+        System.out.println(search(new int[]{-1,0,3,5,9,12}, -1)); // Expected: 0 (first element)
     }
 }`
     },
     expectedOutput: {
-      javascript: "4\n-1",
-      python: "4\n-1",
-      java: "4\n-1"
+      javascript: "4\n-1\n0",
+      python: "4\n-1\n0",
+      java: "4\n-1\n0"
     }
   },
 

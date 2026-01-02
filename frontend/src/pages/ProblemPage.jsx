@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import {useParams } from "react-router-dom";
 import { PROBLEMS } from "../data/problems";
 import Navbar from "../components/Navbar";
 
@@ -14,7 +14,6 @@ import confetti from "canvas-confetti";
 
 function ProblemPage() {
   const { id } = useParams();
-  const navigate = useNavigate();
 
   const [currentProblemId, setCurrentProblemId] = useState(id);
   const [selectedLanguage, setSelectedLanguage] = useState("javascript");
@@ -22,6 +21,7 @@ function ProblemPage() {
   const [output, setOutput] = useState(null);
   const [isRunning, setIsRunning] = useState(false);
   const [currentProblem, setCurrentProblem] = useState(PROBLEMS[currentProblemId]);
+  const [activeTab, setActiveTab] = useState("problem"); // For mobile tabs
 
   
   // update problem when URL param changes
@@ -32,9 +32,7 @@ function ProblemPage() {
       setOutput(null);
       setCurrentProblem(PROBLEMS[id]);
     }
-  }, [id, selectedLanguage, []]);
-
-  console.log("Current Problem:", currentProblem);
+  }, [id, selectedLanguage]);
 
   const handleLanguageChange = (e) => {
     const newLang = e.target.value;
@@ -87,10 +85,9 @@ function ProblemPage() {
     setOutput(null);
 
     const result = await executeCode(selectedLanguage, code);
+
     setOutput(result);
     setIsRunning(false);
-
-    // check if code executed successfully and matches expected output
 
     if (result.success) {
       const expectedOutput = currentProblem.expectedOutput[selectedLanguage];
@@ -99,6 +96,7 @@ function ProblemPage() {
       if (testsPassed) {
         triggerConfetti();
         toast.success("All tests passed! Great job!");
+
       } else {
         toast.error("Tests failed. Check your output!");
       }
@@ -107,7 +105,6 @@ function ProblemPage() {
     }
   };
 
-  // Take to the top when page loads
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -116,23 +113,89 @@ function ProblemPage() {
     <div className="h-screen bg-base-100 flex flex-col">
       <Navbar />
 
-      <div className="flex-1">
-        <PanelGroup direction="horizontal">
+      {/* Mobile Tab Navigation */}
+      <div className="lg:hidden flex border-b border-base-300 bg-base-200">
+        <button
+          onClick={() => setActiveTab("problem")}
+          className={`flex-1 py-3 text-sm font-medium transition-colors ${
+            activeTab === "problem" 
+              ? "text-primary border-b-2 border-primary bg-base-100" 
+              : "text-base-content/60"
+          }`}
+        >
+          Problem
+        </button>
+        <button
+          onClick={() => setActiveTab("code")}
+          className={`flex-1 py-3 text-sm font-medium transition-colors ${
+            activeTab === "code" 
+              ? "text-primary border-b-2 border-primary bg-base-100" 
+              : "text-base-content/60"
+          }`}
+        >
+          Code
+        </button>
+        <button
+          onClick={() => setActiveTab("output")}
+          className={`flex-1 py-3 text-sm font-medium transition-colors ${
+            activeTab === "output" 
+              ? "text-primary border-b-2 border-primary bg-base-100" 
+              : "text-base-content/60"
+          }`}
+        >
+          Output
+        </button>
+      </div>
+
+      {/* Mobile Layout */}
+      <div className="flex-1 lg:hidden overflow-hidden">
+        {activeTab === "problem" && (
+          <div className="h-full overflow-y-auto">
+            <ProblemDescription
+              problem={currentProblem}
+              currentProblemId={currentProblemId}
+            />
+          </div>
+        )}
+        {activeTab === "code" && (
+          <div className="h-full">
+            <CodeEditorPanel
+              selectedLanguage={selectedLanguage}
+              code={code}
+              isRunning={isRunning}
+              onLanguageChange={handleLanguageChange}
+              onCodeChange={setCode}
+              onRunCode={handleRunCode}
+            />
+          </div>
+        )}
+        {activeTab === "output" && (
+          <div className="h-full">
+            <OutputPanel output={output} />
+          </div>
+        )}
+      </div>
+
+      {/* Desktop Layout with Panels */}
+      <div className="flex-1 hidden lg:flex overflow-hidden">
+        <PanelGroup direction="horizontal" className="h-full">
           {/* left panel- problem desc */}
-          <Panel defaultSize={40} minSize={30}>
+          <Panel defaultSize={35} minSize={25}>
             <ProblemDescription
               problem={currentProblem}
               currentProblemId={currentProblemId}
             />
           </Panel>
 
-          <PanelResizeHandle className="w-2 bg-base-300 hover:bg-primary transition-colors cursor-col-resize" />
+          <PanelResizeHandle className="w-1.5 bg-base-300 hover:bg-primary transition-colors cursor-col-resize flex items-center justify-center group">
+            <div className="w-0.5 h-8 bg-base-content/20 rounded-full group-hover:bg-primary-content/50 transition-colors" />
+          </PanelResizeHandle>
 
           {/* right panel- code editor & output */}
-          <Panel defaultSize={80} minSize={30}>
-            <PanelGroup direction="vertical">
+          <Panel defaultSize={65} minSize={40}>
+            <PanelGroup direction="vertical" className="h-full">
               {/* Top panel - Code editor */}
-              <Panel defaultSize={80} minSize={30}>
+              <Panel defaultSize={65} minSize={30}>
                 <CodeEditorPanel
                   selectedLanguage={selectedLanguage}
                   code={code}
@@ -141,13 +204,14 @@ function ProblemPage() {
                   onCodeChange={setCode}
                   onRunCode={handleRunCode}
                 />
-            </Panel>
+              </Panel>
 
-          <PanelResizeHandle className="w-2 bg-base-300 hover:bg-primary transition-colors cursor-col-resize" />
+              <PanelResizeHandle className="h-1.5 bg-base-300 hover:bg-primary transition-colors cursor-row-resize flex items-center justify-center group">
+                <div className="h-0.5 w-4 bg-base-content/20 rounded-full group-hover:bg-primary-content/50 transition-colors" />
+              </PanelResizeHandle>
 
               {/* Bottom panel - Output Panel*/}
-
-              <Panel defaultSize={30} minSize={30}>
+              <Panel defaultSize={35} minSize={15}>
                 <OutputPanel output={output} />
               </Panel>
             </PanelGroup>
