@@ -10,6 +10,7 @@ import { connectDB } from "./lib/db.js";
 
 import chatRoutes from "./routes/chatRoutes.js";
 import sessionRoutes from "./routes/sessionRoutes.js";
+import { protectRoute } from "./middleware/protectRoute.js";
 
 const app = express();
 
@@ -20,8 +21,8 @@ app.use(clerkMiddleware()); // This adds auth field to req objects: req.auth()
 
 
 app.use("/api/inngest", serve({ client: inngest, functions }));
-app.use("/api/chat", chatRoutes);
-app.use("/api/sessions", sessionRoutes);
+app.use("/api/chat", protectRoute, chatRoutes);
+app.use("/api/sessions", protectRoute, sessionRoutes);
 
 
 app.get("/health", (req, res) => {
