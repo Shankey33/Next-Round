@@ -16,7 +16,7 @@ function WelcomeSection({ onCreateSession }) {
                   Welcome, {user?.firstName || "there"}!
                 </h1>
                 <p className="text-sm sm:text-base text-base-content/60 mt-1">
-                  Next-Round is still in development phase, please bear with us.
+                  Ready to start your next round of interviews? Create a session or join an existing one!
                 </p>
               </div>
             </div>
