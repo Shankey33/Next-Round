@@ -56,74 +56,76 @@ function HomePage() {
       <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
         {/* Background decoration */}
         <div className="absolute inset-0 -z-10">
-          <div className="absolute top-20 left-1/4 w-72 h-72 bg-primary/10 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-20 right-1/4 w-96 h-96 bg-secondary/10 rounded-full blur-3xl"></div>
+          <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-primary/20 rounded-full blur-[100px] opacity-70 mix-blend-screen animate-pulse"></div>
+          <div className="absolute bottom-10 left-1/4 w-[400px] h-[400px] bg-secondary/20 rounded-full blur-[100px] opacity-70 mix-blend-screen animate-pulse" style={{ animationDelay: '2s' }}></div>
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-accent/20 rounded-full blur-[120px] opacity-50 mix-blend-screen pointer-events-none"></div>
         </div>
 
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center max-w-4xl mx-auto">
+        <div className="max-w-7xl mx-auto relative flex flex-col-reverse lg:flex-row items-center gap-12">
+          {/* Text Content */}
+          <div className="flex-1 text-center lg:text-left backdrop-blur-sm rounded-3xl p-4 sm:p-8 animate-[fade-in_1s_ease-out]">
             {/* Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-8">
-              <SparklesIcon className="size-4" />
-              Practice coding interviews with real peers
+            <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-base-100/80 border border-primary/20 shadow-xl shadow-primary/10 text-primary text-sm font-extibold mb-8 backdrop-blur-md transform hover:scale-105 transition-all animate-[slide-down_0.5s_ease-out]">
+              <SparklesIcon className="size-5 animate-pulse text-warning" />
+              <span className="font-semibold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Power up your prep</span>
             </div>
 
             {/* Main heading */}
-            <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold tracking-tight mb-6">
-              Ace Your Next
-              <span className="block bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
-                Coding Interview
+            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight mb-8 leading-[1.1] animate-[slide-right_0.7s_ease-out]">
+              Level Up Your 
+              <span className="block mt-2 bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent transform hover:scale-[1.02] transition-transform cursor-default">
+                Engineering Career
               </span>
             </h1>
 
             {/* Subheading */}
-            <p className="text-lg sm:text-xl text-base-content/70 max-w-2xl mx-auto mb-10">
-              Practice technical interviews with peers through live video calls and collaborative coding. 
-              Get real-time feedback and improve together.
+            <p className="text-xl sm:text-2xl text-base-content/80 mb-10 font-medium leading-relaxed max-w-2xl mx-auto lg:mx-0 animate-[slide-up_0.9s_ease-out]">
+              Master technical interviews through immersive live sessions. Pair with top peers, write code, and conquer challenges together.
             </p>
 
             {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
+            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-6 mb-16 animate-[fade-in_1.1s_ease-out]">
               <SignInButton mode="modal">
-                <button className="btn btn-primary btn-lg gap-2 shadow-lg shadow-primary/25">
-                  <PlayIcon className="size-5" />
-                  Start Practicing Free
+                <button className="btn btn-primary btn-lg gap-3 shadow-xl shadow-primary/30 hover:shadow-primary/50 transition-all hover:-translate-y-1 px-8 rounded-full">
+                  <PlayIcon className="size-6 animate-bounce" />
+                  <span className="text-lg">Start Journey</span>
                 </button>
               </SignInButton>
-              <a href="#how-it-works" className="btn btn-ghost btn-lg gap-2">
-                See How It Works
-                <ArrowRightIcon className="size-5" />
+              <a href="#how-it-works" className="btn btn-outline btn-lg gap-3 bg-base-100/50 backdrop-blur-md hover:bg-base-200 transition-all hover:-translate-y-1 px-8 rounded-full border-2 border-base-content/10">
+                <span className="text-lg">Explore Platform</span>
+                <ArrowRightIcon className="size-5 group-hover:translate-x-1" />
               </a>
             </div>
 
             {/* Trust badges */}
-            <div className="flex flex-wrap items-center justify-center gap-6 text-base-content/50 text-sm">
-              <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-6 text-base-content/70 font-medium bg-base-100/40 py-4 px-6 rounded-2xl backdrop-blur-sm border border-base-content/5 animate-[fade-in_1.3s_ease-out]">
+              <div className="flex items-center gap-2 hover:text-primary transition-colors cursor-default transform hover:scale-105 duration-200">
                 <CheckCircleIcon className="size-5 text-success" />
-                <span>No credit card required</span>
+                <span>No Credit Card</span>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 hover:text-primary transition-colors cursor-default transform hover:scale-105 duration-200">
                 <CheckCircleIcon className="size-5 text-success" />
-                <span>Free to get started</span>
+                <span>Instant Access</span>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 hover:text-primary transition-colors cursor-default transform hover:scale-105 duration-200">
                 <CheckCircleIcon className="size-5 text-success" />
-                <span>Join in seconds</span>
+                <span>Pair Instantly</span>
               </div>
             </div>
           </div>
 
-          {/* Hero Image/Preview */}
-          <div className="mt-16 relative">
+          {/* Hero Image/Preview - Moved to Side/Top & Animated */}
+          <div className="flex-1 w-full relative transform hover:scale-[1.02] transition-transform duration-500 animate-[fade-in-up_1s_ease-out]">
             <div className="absolute inset-0 bg-gradient-to-t from-base-100 via-transparent to-transparent z-10 pointer-events-none"></div>
-            <div className="bg-base-200 rounded-2xl border border-base-300 shadow-2xl overflow-hidden">
+            <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 to-secondary/20 rounded-[2rem] blur-2xl -z-10 animate-pulse"></div>
+            <div className="bg-base-200 rounded-[2rem] border border-base-300 shadow-2xl shadow-primary/20 overflow-hidden">
               <div className="bg-base-300 px-4 py-3 flex items-center gap-2">
                 <div className="flex gap-2">
-                  <div className="size-3 rounded-full bg-error"></div>
-                  <div className="size-3 rounded-full bg-warning"></div>
-                  <div className="size-3 rounded-full bg-success"></div>
+                  <div className="size-3 rounded-full bg-error cursor-pointer hover:opacity-80"></div>
+                  <div className="size-3 rounded-full bg-warning cursor-pointer hover:opacity-80"></div>
+                  <div className="size-3 rounded-full bg-success cursor-pointer hover:opacity-80"></div>
                 </div>
-                <span className="text-xs text-base-content/50 ml-2">next-round.dev</span>
+                <span className="text-xs text-base-content/50 ml-2 font-mono">next-round.dev</span>
               </div>
               <video 
                 src="/hero-video.mp4" 

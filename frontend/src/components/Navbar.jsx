@@ -2,7 +2,7 @@ import { Link, useLocation } from "react-router-dom";
 import { BookOpenIcon, LayoutDashboardIcon, CodeIcon } from "lucide-react";
 import { UserButton } from "@clerk/clerk-react";
 
-function Navbar() {
+function Navbar({ onCreateSession }) {
   const location = useLocation();
 
   const isActive = (path) => location.pathname === path;
@@ -33,24 +33,16 @@ function Navbar() {
 
           {/* NAV LINKS */}
           <div className="flex items-center gap-2">
-            {/* PROBLEMS PAGE LINK */}
-            <Link
-              to="/problems"
-              className={`group relative px-4 py-2 rounded-xl font-medium text-sm transition-all duration-300
-                ${
-                  isActive("/problems")
-                    ? "bg-primary text-primary-content shadow-lg shadow-primary/25"
-                    : "hover:bg-base-300/80 text-base-content/70 hover:text-base-content"
-                }`}
+            {/* CREATE SESSION BUTTON */}
+            <button
+              onClick={onCreateSession}
+              className="group relative px-4 py-2 rounded-xl font-medium text-sm transition-all duration-300 bg-yellow-500 text-yellow-950 shadow-lg shadow-yellow-500/30 hover:bg-yellow-400 hover:shadow-yellow-500/50"
             >
               <div className="flex items-center gap-2">
-                <BookOpenIcon className={`size-4 transition-transform duration-300 ${!isActive("/problems") && "group-hover:scale-110"}`} />
-                <span className="hidden sm:inline">Problems</span>
+                <BookOpenIcon className="size-4 transition-transform duration-300 group-hover:scale-110" />
+                <span className="hidden sm:inline">Session+</span>
               </div>
-              {!isActive("/problems") && (
-                <span className="absolute inset-x-0 -bottom-px h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-              )}
-            </Link>
+            </button>
 
             {/* DASHBOARD PAGE LINK */}
             <Link

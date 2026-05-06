@@ -50,7 +50,7 @@ function DashboardPage() {
   return (
     <>
       <div className="min-h-screen bg-base-300">
-        <Navbar />
+        <Navbar onCreateSession={() => setShowCreateModal(true)} />
         <WelcomeSection onCreateSession={() => setShowCreateModal(true)} />
 
         {/* Grid layout */}

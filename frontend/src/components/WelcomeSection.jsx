@@ -1,8 +1,13 @@
 import { useUser } from "@clerk/clerk-react";
 import { ArrowRightIcon, ZapIcon } from "lucide-react";
 
-function WelcomeSection({ onCreateSession }) {
+function WelcomeSection() {
   const { user } = useUser();
+
+  const handleSolveClick = () => {
+    window.location.href = "/problems";
+  }
+
 
   return (
     <div className="relative overflow-hidden">
@@ -22,12 +27,12 @@ function WelcomeSection({ onCreateSession }) {
             </div>
           </div>
           <button
-            onClick={onCreateSession}
-            className="group w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-xl sm:rounded-2xl transition-all duration-200 hover:opacity-90 shadow-lg hover:shadow-cyan-500/20"
+            onClick={handleSolveClick}
+            className="group w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-cyan-500 to-green-600 rounded-xl sm:rounded-2xl transition-all duration-200 hover:opacity-90 shadow-lg hover:shadow-cyan-500/20"
           >
             <div className="flex items-center justify-center gap-2 sm:gap-3 text-white font-bold text-base sm:text-lg">
               <ZapIcon className="w-5 h-5 sm:w-6 sm:h-6" />
-              <span>Create Session</span>
+              <span>Solve</span>
               <ArrowRightIcon className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
             </div>
           </button>

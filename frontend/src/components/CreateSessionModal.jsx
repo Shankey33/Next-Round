@@ -16,12 +16,15 @@ function CreateSessionModal({
   return (
     <div className="modal modal-open">
       <div className="modal-box max-w-2xl">
-        <h3 className="font-bold text-2xl mb-6">Create New Session</h3>
+        <h3 className="font-bold text-2xl mb-2">Create New Session</h3>
+        <p className="text-base-content/70 mb-6 text-sm">
+          Choose a problem, start a session, and invite your friends for interactive video chat problem collaboration.
+        </p>
 
         <div className="space-y-8">
           {/* PROBLEM SELECTION */}
           <div className="space-y-2">
-            <label className="label">
+            <label className="label justify-start gap-1">
               <span className="label-text font-semibold">Select Problem</span>
               <span className="label-text-alt text-error">*</span>
             </label>

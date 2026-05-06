@@ -1,7 +1,13 @@
 import axios from "axios";
 
+const apiBaseURL = import.meta.env.VITE_API_URL;
+
+if (import.meta.env.DEV) {
+  console.info("Frontend API base URL:", apiBaseURL);
+}
+
 const axiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL: apiBaseURL,
   withCredentials: true,
 });
 
